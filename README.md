@@ -1,6 +1,9 @@
 最后编辑时间：2025-08-30-20:07
 
 # Lingua LLM Project Introduction
+
+##请注意，本项目目前不具备任何通用性，对与本文件提到的运行环境如有任何不符而遇到原因的可以请求帮助，但截至目前本项目暂无通用化计划
+
 ## 1. 项目概述
 
 本项目的旨在基于 Llama3.2:3B 对 Lingua Sama 的 LLM 部分进行 LoRA 微调，使用 Hugging Face 标准库。
