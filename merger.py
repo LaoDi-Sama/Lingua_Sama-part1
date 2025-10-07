@@ -23,7 +23,7 @@ lora_model_path = file_ds
 model = LlamaForCausalLM.from_pretrained(
     base_model_path,
     device_map="cpu",
-    torch_dtype=torch.float16,########################量化
+    torch_dtype=torch.float16,########################精度
     low_cpu_mem_usage=True
 )
 
@@ -38,4 +38,4 @@ model.save_pretrained(output_path, safe_serialization=True)
 
 
 
-#config.json、tokenizer.json、tokenizer.model、special_tokens_map.json、generation_config.json（
+#合并后的文件夹里需要有config.json、tokenizer.json或tokenizer.model（有哪个用哪个）、special_tokens_map.json、generation_config.json，才能合并gguf

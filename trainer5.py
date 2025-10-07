@@ -62,7 +62,7 @@ max_memory = {0: GPU_MEM_LIMIT, "cpu": CPU_MEM_LIMIT}
 
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_PATH,
-    torch_dtype=torch.float16,   # RDNA2/ROCm 推荐 fp16
+    torch_dtype=torch.bfloat16,   # RDNA2/ROCm 推荐 fp16
     #device_map="auto",           # GPU/CPU 自动分配， plan1-None
     max_memory=max_memory,       # 控制每个设备的内存上限
     offload_folder=OFFLOAD_DIR,  # 溢出到磁盘
@@ -103,10 +103,10 @@ else:
         lora_dropout=0.1,
         bias="none",
         task_type="CAUSAL_LM",
-        dtype=torch.float16
+        dtype=torch.bfloat16
     )
     # 强制 PEFT 在初始化适配器时使用 fp16，降低 dtype cast 风险
-    BaseTuner._prepare_adapter_init_dtype = lambda self, model, dtype: torch.float16
+    BaseTuner._prepare_adapter_init_dtype = lambda self, model, dtype: torch.bfloat16
     model = get_peft_model(model, lora_cfg)
 
 # 4) 数据模板（Llama-3 chat 模板）
@@ -149,7 +149,7 @@ args = TrainingArguments(
     num_train_epochs=1,
     learning_rate=2e-4,
     fp16=False,              #  False
-    bf16=False,              # 确保没有 bf16
+    bf16=True,              # 确保没有 bf16
     logging_steps=10,
     save_steps=50,
     optim="adamw_torch",
